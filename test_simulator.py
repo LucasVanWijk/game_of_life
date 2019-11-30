@@ -44,3 +44,15 @@ class TestSimulator(TestCase):
         self.sim.set_world(world)
         self.assertIsInstance(self.sim.get_world(), World)
         self.assertIs(self.sim.get_world(), world)
+
+    def test_next_state(self):
+        self.sim.set_world(World(10))
+        x, y = 7, 4
+        self.sim.get_world().set(x-1, y)
+        self.sim.get_world().set(x+1, y)
+        self.sim.get_world().set(x, y-1)
+        self.assertEquals(self.sim.get_world().get(x, y), 0)
+        # KLAARZETTEN SITUATIE
+        self.sim.next_state(x, y)
+        # check verwachtte uitkomst
+        self.assertEquals(self.sim.get_world().get(x, y), 1)
